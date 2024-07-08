@@ -4,6 +4,7 @@ This repository contains a comprehensive guide to using NumPy for various scient
 
 ## Table of Contents
 
+0. [Reference](https://numpy.org/doc/)
 1. [Array Creation](01_array_creation.ipynb)
 2. [Array Manipulation](02_array_manipulation.ipynb)
 3. [Indexing and Slicing](03_indexing_slicing.ipynb)
