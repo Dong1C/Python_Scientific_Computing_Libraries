@@ -4,6 +4,8 @@ This repository contains tutorials and examples for learning various Python scie
 
 ## Contents
 
+
+0. [Basic](00_basics/README.md) - All basics in Python3.
 1. [NumPy](01_numpy/README.md) - Fundamental package for scientific computing with Python.
 2. [Pandas](02_pandas/README.md) - Data analysis and manipulation library.
 3. [SciPy](03_scipy/README.md) - Scientific and technical computing library.
