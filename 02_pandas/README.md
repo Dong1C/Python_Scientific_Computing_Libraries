@@ -1,9 +1,7 @@
 # Pandas Library Overview
 
-This repository provides a comprehensive overview of the Pandas library, covering its various functionalities and operations. The content is organized into different sections, 
+This repository provides a comprehensive overview of the Pandas library, covering its various functionalities and operations. The content is organized into different sections,
 each focusing on a specific aspect of Pandas.
-
-
 
 ## Table of Contents
 
@@ -90,4 +88,3 @@ each focusing on a specific aspect of Pandas.
 Each section is accompanied by a Jupyter Notebook demonstrating the use of the respective operations and functions. You can find the notebooks in the corresponding directories.
 
 Happy Learning!
-
