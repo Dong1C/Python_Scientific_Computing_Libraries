@@ -4,7 +4,6 @@ This repository contains tutorials and examples for learning various Python scie
 
 ## Contents
 
-
 0. [Basic](00_basics/README.md) - All basics in Python3.
 1. [NumPy](01_numpy/README.md) - Fundamental package for scientific computing with Python.
 2. [Pandas](02_pandas/README.md) - Data analysis and manipulation library.
@@ -19,10 +18,11 @@ This repository contains tutorials and examples for learning various Python scie
 11. [Scikit-learn](11_sklearn/README.md) - Machine learning library.
 12. [NetworkX](12_networkx/README.md) - Library for the creation, manipulation, and study of complex networks.
 13. [h5py](13_h5py/README.md) - HDF5 file handling library.
+14. [scrapy](14_scrapy/README.md) - Libs and scrapying projects using several libs.
 
 Each section contains:
+
 - An introduction to the library.
 - Installation instructions.
 - Basic usage examples.
 - Advanced features and use cases.
-
