@@ -2,16 +2,14 @@ import json
 import urllib.parse
 import requests
 import os
-import unittest
-from concurrent.futures import ThreadPoolExecutor
+from chunks_merge import chunks_then_merge, read_tslist
 
 """
     1. store all ts_urls into a specific file 
     2. download ts files and compress them into the video chunks
         1. ffmpeg merge 100 ts files one time
         2. chunks merge last
-    3. 
-    
+    3. create a chunck merger  
     
 """
 
@@ -79,8 +77,7 @@ def fetch_m3u8_ts_urls(m3u8_url, fpath="ts_filelist"):
 
     fpath = _getAbsPath(fpath)
     with open(file=fpath, mode="w") as f:
-        for line in ts_urls:
-            f.write(line+'\n')
+        f.writelines('\n'.join(ts_urls))
 
     return fpath
 
@@ -91,6 +88,7 @@ def merge_ts_files(ts_files, output_file):
             file_list.write(f"file '{ts_file}'\n")
     os.system(f"ffmpeg -f concat -safe 0 -i file_list.txt -c copy {output_file}")
     os.remove("file_list.txt")
+
 
 def ffmpeg_merge_chunks(chunks, file_path):
     # just reduce the chunks using the merge function
@@ -105,27 +103,23 @@ if __name__ == "__main__":
     # fpath = fetch_m3u8_ts_urls(m3u8_url)
     # print(fpath)
 
-    urls = [
-        "https://ikcdn01.ikzybf.com/20221008/XRC0vaXI/2000kb/hls/uW7t9XEy.ts",
-        "https://ikcdn01.ikzybf.com/20221008/XRC0vaXI/2000kb/hls/M4meCSLs.ts"
-    ]
-    for idx, url in enumerate(urls):
-        resp = requests.get(url, headers=headers)
-        paths = []
-        if resp.status_code == 200:
-            paths.append(_getAbsPath(f"{idx}.ts"))
-            with open(paths[-1], 'wb') as f:
-                f.write(resp.content)
-    
-    import ffmpeg
-    
-    ffmpeg.input(urls).output(_getAbsPath("output.mp4"))
-   
-   
-    
-    # output_dir = "downloaded_segments"
-    # output_file = "output_movie.mp4"
+    # urls = [
+    #     "https://ikcdn01.ikzybf.com/20221008/XRC0vaXI/2000kb/hls/uW7t9XEy.ts",
+    #     "https://ikcdn01.ikzybf.com/20221008/XRC0vaXI/2000kb/hls/M4meCSLs.ts",
+    # ]
 
-    # ts_files = download_m3u8_playlist(m3u8_url, output_dir)
-    # merge_ts_files(ts_files, output_file)
-    # print(f"Downloaded and merged video saved as {output_file}")
+    # test just write them together
+    # fname = _getAbsPath('all.ts')
+    # with open(fname, 'wb') as f:
+    #     for idx, url in enumerate(urls):
+    #         resp = requests.get(url, headers=headers)
+    #         if resp.status_code == 200:
+    #             f.write(resp.content)
+
+    # ffmpeg convertion
+    # os.system(f"ffmpeg -i {fname} {_getAbsPath('all.mp4')} > /dev/null")
+    # os.system(f"ffmpeg -i {'|'.join(urls)} {_getAbsPath('all.mp4')} &1> /dev/null")
+    # os.system(f"ffmpeg -f concat -i {_getAbsPath('ts_filelist')} -c copy output.mp4")
+    # os.system('ffmpeg')
+    chunks_then_merge(read_tslist(_getAbsPath("./ts_filelist")),
+                      headers, _getAbsPath("test.mp4"))
