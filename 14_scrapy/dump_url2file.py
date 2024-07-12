@@ -77,7 +77,7 @@ def fetch_m3u8_ts_urls(m3u8_url, fpath="ts_filelist"):
 
     fpath = _getAbsPath(fpath)
     with open(file=fpath, mode="w") as f:
-        f.writelines('\n'.join(ts_urls))
+        f.writelines("\n".join(ts_urls))
 
     return fpath
 
@@ -96,12 +96,12 @@ def ffmpeg_merge_chunks(chunks, file_path):
 
 
 if __name__ == "__main__":
-    # json_str = '{"link":"/vod/wuyizhidi/1-1.html","link_next":null,"link_pre":null,"url":"/m3u8/player/?vod=51509&pid=1&no=1&url=https%3A%2F%2Fikcdn01.ikzybf.com%2F20221008%2FXRC0vaXI%2Findex.m3u8","url_next":null,"poster":"https://webp.ykjljdcss.com/upload/movie/c/c6034bb52169e608.webp","adUrl":null,"no":"1","vod":51509}'
-    # m3u8_url = extract_m3u8_url(json_str)
-    # print(m3u8_url)
+    json_str = '{"link":"/vod/wuyizhidi/1-1.html","link_next":null,"link_pre":null,"url":"/m3u8/player/?vod=51509&pid=1&no=1&url=https%3A%2F%2Fikcdn01.ikzybf.com%2F20221008%2FXRC0vaXI%2Findex.m3u8","url_next":null,"poster":"https://webp.ykjljdcss.com/upload/movie/c/c6034bb52169e608.webp","adUrl":null,"no":"1","vod":51509}'
+    m3u8_url = extract_m3u8_url(json_str)
+    print(m3u8_url)
 
-    # fpath = fetch_m3u8_ts_urls(m3u8_url)
-    # print(fpath)
+    fpath = fetch_m3u8_ts_urls(m3u8_url)
+    print(fpath)
 
     # urls = [
     #     "https://ikcdn01.ikzybf.com/20221008/XRC0vaXI/2000kb/hls/uW7t9XEy.ts",
@@ -121,5 +121,3 @@ if __name__ == "__main__":
     # os.system(f"ffmpeg -i {'|'.join(urls)} {_getAbsPath('all.mp4')} &1> /dev/null")
     # os.system(f"ffmpeg -f concat -i {_getAbsPath('ts_filelist')} -c copy output.mp4")
     # os.system('ffmpeg')
-    chunks_then_merge(read_tslist(_getAbsPath("./ts_filelist")),
-                      headers, _getAbsPath("test.mp4"))
