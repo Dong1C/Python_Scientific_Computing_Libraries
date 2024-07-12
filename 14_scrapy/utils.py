@@ -1,6 +1,7 @@
 import time
 import asyncio
 from functools import wraps
+from moviepy.editor import VideoFileClip, concatenate_videoclips
 
 
 def async_timer(func):
@@ -27,6 +28,11 @@ def timer(func):
         return result
 
     return wrapper
+
+def merge_video_clips(segments, fpath):
+    video_clips = [VideoFileClip(segment) for segment in segments]
+    final_clip = concatenate_videoclips(video_clips)
+    final_clip.write_videofile(fpath, codec="libx264", audio_codec="aac")
 
 
 @async_timer

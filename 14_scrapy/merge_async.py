@@ -3,7 +3,8 @@ import asyncio
 import aiofiles
 import os
 import tempfile
-from utils import timer, async_timer
+from concurrent.futures import ThreadPoolExecutor
+from utils import timer, async_timer, merge_video_clips
 from tqdm.asyncio import tqdm
 
 _getAbsPath = lambda p: os.path.join(os.path.dirname(__file__), p)
@@ -36,37 +37,32 @@ async def async_download_merge(ts_urls, headers, fpath):
             ]
             segment_files = await tqdm.gather(*tasks)
 
-            fl = os.path.join(_getAbsPath("tmp_ts_list.txt"))
-            async with aiofiles.open(fl, "w") as f:
-                await f.write(
-                    "\n".join(
-                        [f"file '{segment_file}'" for segment_file in segment_files]
-                    )
-                )
+        loop = asyncio.get_running_loop()
+        with ThreadPoolExecutor() as pool:
+            await loop.run_in_executor(pool, merge_video_clips, segment_files, fpath)
+        # merge_video_clips(segment_files, fpath)
+
+        # fl = os.path.join(_getAbsPath("tmp_ts_list.txt"))
+        # async with aiofiles.open(fl, "w") as f:
+        #     await f.write(
+        #         "\n".join(
+        #             [f"file '{segment_file}'" for segment_file in segment_files]
+        #         )
+        #     )
 
         # os.system(f"ffmpeg -f concat -safe 0 -i {fl} -c copy -bsf:a aac_adtstoasc {fpath}")
 
 
 async def main():
-    l = await read_tslist(_getAbsPath("./ts_filelist"))
+    l = await read_tslist(_getAbsPath("ts_urls"))
     # print(l)
     headers = {
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br, zstd",
-        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-        "Connection": "keep-alive",
-        "Host": "ikcdn01.ikzybf.com",
-        "Origin": "https://www.7qhb.com",
-        "Referer": "https://www.7qhb.com/",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "cross-site",
+        "Sec-Ch-Ua": '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": "Windows",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-        "sec-ch-ua": '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"Windows"',
     }
-    await async_download_merge(l[:500], headers, "output_file.mp4")
+    await async_download_merge(l, headers, _getAbsPath("output_file2.mp4"))
 
 
 if __name__ == "__main__":

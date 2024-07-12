@@ -4,7 +4,7 @@ import tempfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 
-from utils import timer
+from utils import timer, merge_video_clips
 
 _getAbsPath = lambda p: os.path.join(os.path.dirname(__file__), p)
 
@@ -34,21 +34,28 @@ def thread_download_merge(ts_urls, headers, fpath):
     with ThreadPoolExecutor(
         max_workers=8
     ) as executor, tempfile.TemporaryDirectory() as tmp_frag_dir:
+        
+        # submit the tasks
         futures_to_url = {
-            executor.submit(download_ts_segment, url, idx, headers, tmp_frag_dir) : url
+            executor.submit(download_ts_segment, url, idx, headers, tmp_frag_dir): url
             for idx, url in enumerate(ts_urls)
         }
-        
-            
-        fl = os.path.join(_getAbsPath("tmp_ts_list.txt"))
 
-        with open(file=fl, mode="w") as f:
-            segment_filenames = []
-            for future in tqdm(as_completed(futures_to_url), total=len(ts_urls)):
-                segment_filenames.append(future.result())
-            f.write("\n".join(["file '" + fname + "'" for fname in segment_filenames]))
-        # print([future.result() for future in futures])
+        # moviepy
+        # get segment files' path
+        downloaded_segments = []
+        for future in tqdm(as_completed(futures_to_url), total=len(ts_urls)):
+            downloaded_segments.append(future.result())
+        # merge
+        merge_video_clips(downloaded_segments, fpath)
 
+        # version: ffmpeg
+        # fl = os.path.join(_getAbsPath("tmp_ts_list.txt"))
+        # with open(file=fl, mode="w") as f:
+        #     segment_filenames = []
+        #     for future in tqdm(as_completed(futures_to_url), total=len(ts_urls)):
+        #         segment_filenames.append(future.result())
+        #     f.write("\n".join(["file '" + fname + "'" for fname in segment_filenames]))
         # os.system(f"ffmpeg -f concat -safe 0 -i {fl} -c copy -bsf:a aac_adtstoasc {fpath}")
 
 
@@ -71,7 +78,7 @@ def main():
     }
     l = read_tslist(_getAbsPath("./ts_filelist"))
     # print(l)
-    thread_download_merge(l[:100], headers, "output_file.mp4")
+    thread_download_merge(l, headers, _getAbsPath("output_file.mp4"))
 
 
 if __name__ == "__main__":
