@@ -20,6 +20,7 @@ This repository contains a comprehensive guide to using NumPy for various scient
 ## 1. Array Creation
 
 NumPy provides several functions to create arrays of different shapes and types. This section covers the following topics:
+
 - `numpy.array`
 - `numpy.zeros`
 - `numpy.ones`
@@ -36,6 +37,7 @@ NumPy provides several functions to create arrays of different shapes and types.
 ## 2. Array Manipulation
 
 Array manipulation includes changing the shape, stacking, splitting, and modifying arrays. This section covers the following topics:
+
 - `numpy.reshape`
 - `numpy.ravel`
 - `numpy.flatten`
@@ -54,6 +56,7 @@ Array manipulation includes changing the shape, stacking, splitting, and modifyi
 ## 3. Indexing and Slicing
 
 NumPy allows for powerful indexing and slicing capabilities. This section covers the following topics:
+
 - `numpy.take`
 - `numpy.put`
 - `numpy.where`
@@ -67,6 +70,7 @@ NumPy allows for powerful indexing and slicing capabilities. This section covers
 ## 4. Mathematical Operations
 
 NumPy supports a wide range of mathematical operations. This section covers the following topics:
+
 - `numpy.add`
 - `numpy.subtract`
 - `numpy.multiply`
@@ -83,6 +87,7 @@ NumPy supports a wide range of mathematical operations. This section covers the 
 ## 5. Statistical Functions
 
 Statistical functions are essential for data analysis. This section covers the following topics:
+
 - `numpy.mean`
 - `numpy.median`
 - `numpy.std`
@@ -99,6 +104,7 @@ Statistical functions are essential for data analysis. This section covers the f
 ## 6. Linear Algebra
 
 NumPy includes functions for linear algebra operations. This section covers the following topics:
+
 - `numpy.dot`
 - `numpy.vdot`
 - `numpy.inner`
@@ -114,6 +120,7 @@ NumPy includes functions for linear algebra operations. This section covers the 
 ## 7. Random Number Generation
 
 NumPy provides tools for generating random numbers. This section covers the following topics:
+
 - `numpy.random.rand`
 - `numpy.random.randn`
 - `numpy.random.randint`
@@ -125,6 +132,7 @@ NumPy provides tools for generating random numbers. This section covers the foll
 ## 8. Broadcasting
 
 Broadcasting allows NumPy to work with arrays of different shapes. This section covers the following topics:
+
 - `numpy.broadcast`
 - `numpy.broadcast_to`
 - `numpy.broadcast_arrays`
@@ -134,6 +142,7 @@ Broadcasting allows NumPy to work with arrays of different shapes. This section 
 ## 9. File I/O
 
 NumPy offers functions for reading from and writing to files. This section covers the following topics:
+
 - `numpy.loadtxt`
 - `numpy.savetxt`
 - `numpy.load`
@@ -141,4 +150,3 @@ NumPy offers functions for reading from and writing to files. This section cover
 - `numpy.savez`
 
 [Learn More](09_file_io.ipynb)
-

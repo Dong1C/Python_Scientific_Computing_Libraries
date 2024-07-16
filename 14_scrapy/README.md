@@ -1,1 +1,4 @@
 
+- Selenium
+- requests
+- beautifulsoup4
