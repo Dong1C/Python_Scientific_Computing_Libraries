@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pyecharts Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <h1>Bar Chart</h1>
+    {% for comp in comps %}
+    {{comp | safe}}
+    {% endfor %}
+</body>
+
+</html>

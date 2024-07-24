@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pyecharts Charts</title>
+</head>
+
+<body>
+    <h1>Charts</h1>
+    {% for chart in charts %}
+    <div>
+        <h2>{{ chart }}</h2>
+        <iframe src="{{url_for("get_chart", filename=chart)}}" width="600" height="400"></iframe>
+    </div>
+    {% endfor %}
+</body>
+
+</html>
